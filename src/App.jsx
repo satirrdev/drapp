@@ -1,5 +1,5 @@
 import React, { useState, useEffect, useCallback } from 'react'
-import { BrowserRouter, Routes, Route, Navigate, useParams } from 'react-router-dom'
+import { HashRouter, Routes, Route, Navigate, useParams } from 'react-router-dom'
 import Header from './components/Header'
 import Page from './pages/Page'
 import AppDetail from './pages/AppDetail'
@@ -16,7 +16,7 @@ export default function App() {
   const toggleTheme = useCallback(() => setTheme((t) => (t === 'dark' ? 'light' : 'dark')), [])
 
   return (
-    <BrowserRouter>
+    <HashRouter>
       <div className="container">
         <Header theme={theme} onToggleTheme={toggleTheme} />
         <Routes>
@@ -25,7 +25,7 @@ export default function App() {
           <Route path="/app/:appId" element={<DetailWrapper />} />
         </Routes>
       </div>
-    </BrowserRouter>
+    </HashRouter>
   )
 }
 

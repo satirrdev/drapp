@@ -1,4 +1,5 @@
 import React, { useState, useEffect, useMemo, useCallback, useRef } from 'react'
+import { useNavigate } from 'react-router-dom'
 import { fetchPage, fetchSearchIndex, searchIndex, getCategories } from '../services/fdroidApi'
 import AppCard from '../components/AppCard'
 import SearchBar from '../components/SearchBar'
@@ -7,6 +8,7 @@ import Pagination from '../components/Pagination'
 const PER_PAGE = 20
 
 export default function Page({ pageNum }) {
+  const navigate = useNavigate()
   const [pageData, setPageData] = useState([])
   const [searchIdx, setSearchIdx] = useState(null)
   const [loading, setLoading] = useState(true)
@@ -113,7 +115,7 @@ export default function Page({ pageNum }) {
             ))}
           </div>
           {displayTotal > 1 && !isSearching && (
-            <Pagination page={pageNum} totalPages={displayTotal} onPageChange={(p) => window.location.href = `/page/${p}`} />
+            <Pagination page={pageNum} totalPages={displayTotal} onPageChange={(p) => navigate(`/page/${p}`)} />
           )}
         </>
       )}

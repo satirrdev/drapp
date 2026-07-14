@@ -1,0 +1,1 @@
+{"n":"OpenVPN for Android","s":"OpenVPN without root","i":null,"v":"0.7.62","c":["Internet","VPN & Proxy"],"d":"With the VPNService in Android 4.0+ it is possible to create a VPN that doesn't need root access.","src":"https://github.com/schwabe/ics-openvpn","lic":"GPL-2.0-only","web":"https://ics-openvpn.blinkt.de/","up":1769908620000,"vc":217}
