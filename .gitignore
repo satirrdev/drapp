@@ -1,4 +1,5 @@
 node_modules/
+dist/
 public/search_index.json
 public/page_*.json
 public/data/

@@ -3,8 +3,8 @@ import react from '@vitejs/plugin-react'
 
 export default defineConfig({
   plugins: [react()],
-  base: '/drapp/',
+  base: process.env.VERCEL ? '/' : '/drapp/',
   build: {
-    outDir: 'docs',
+    outDir: process.env.VERCEL ? 'dist' : 'docs',
   },
 })
