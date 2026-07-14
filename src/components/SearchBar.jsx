@@ -1,4 +1,5 @@
 import React, { useCallback } from 'react'
+import { Link } from 'react-router-dom'
 
 export default function SearchBar({ query, category, categories, onChange, pageNum }) {
   const handleQuery = useCallback(
@@ -15,13 +16,13 @@ export default function SearchBar({ query, category, categories, onChange, pageN
         <option value="">All Categories</option>
         {categories.map((c) => <option key={c} value={c}>{c}</option>)}
       </select>
-      <a href="/page/1" style={{
+      <Link to="/page/1" style={{
         display: 'inline-flex', alignItems: 'center',
         background: 'var(--fg)', color: 'var(--bg)',
         border: 'var(--border)', padding: '10px 14px',
         fontSize: 13, fontWeight: 'bold', textTransform: 'uppercase',
         textDecoration: 'none',
-      }}>Clear</a>
+      }}>Clear</Link>
     </div>
   )
 }
