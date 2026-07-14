@@ -1,4 +1,5 @@
 import React from 'react'
+import { Link } from 'react-router-dom'
 
 const PLACEHOLDER = (
   <svg className="card-icon" viewBox="0 0 48 48" fill="none">
@@ -22,7 +23,7 @@ export default function AppCard({ app, loadNow }) {
   }, [loadNow, app.i])
 
   return (
-    <a href={`/app/${encodeURIComponent(app.id)}`} style={{ textDecoration: 'none', color: 'inherit' }}>
+    <Link to={`/app/${encodeURIComponent(app.id)}`} style={{ textDecoration: 'none', color: 'inherit' }}>
       <div className="card">
         <div className="card-top">
           <div style={{ position: 'relative', width: 48, height: 48, flexShrink: 0 }}>
@@ -50,6 +51,6 @@ export default function AppCard({ app, loadNow }) {
           {app.c && app.c.length > 0 && <span>{app.c[0]}</span>}
         </div>
       </div>
-    </a>
+    </Link>
   )
 }

@@ -1,4 +1,5 @@
 import React, { useState, useEffect, useMemo } from 'react'
+import { Link } from 'react-router-dom'
 import { marked } from 'marked'
 import { fetchAppData } from '../services/fdroidApi'
 
@@ -22,7 +23,7 @@ export default function AppDetail({ appId }) {
 
   return (
     <div className="detail-page">
-      <a href="/" className="back-btn">&larr; Back to list</a>
+      <Link to="/" className="back-btn">&larr; Back to list</Link>
 
       <div className="detail-header">
         {data.i ? (
