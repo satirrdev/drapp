@@ -1,0 +1,1 @@
+{"n":"Heading Calculator","s":"Flight navigation aid","i":null,"v":"1.0","c":["Navigation"],"d":"Calculate true heading (TH) and ground speed (GS) of an aircraft from given true\nairspeed (TAS), true course (TC), and wind direction and speed (WD/WS).","src":"https://github.com/eugmes/headingcalculator","lic":"GPL-3.0-only","web":null,"up":1626307200000,"vc":1}
