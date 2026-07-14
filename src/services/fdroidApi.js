@@ -1,3 +1,5 @@
+const BASE = import.meta.env.BASE_URL || '/'
+
 const CACHE_PAGE_PREFIX = 'fdroid_page_'
 const CACHE_SEARCH_KEY = 'fdroid_search'
 const CACHE_DATA_PREFIX = 'fdroid_data_'
@@ -28,7 +30,7 @@ export async function fetchPage(pageNum) {
   if (cachedPages[pageNum]) return cachedPages[pageNum]
   const cached = loadLS(cacheKey)
   if (cached) { cachedPages[pageNum] = cached; return cached }
-  const data = await fetchJson(`/page_${pageNum}.json`)
+  const data = await fetchJson(`${BASE}page_${pageNum}.json`)
   saveLS(cacheKey, data)
   cachedPages[pageNum] = data
   return data
@@ -38,7 +40,7 @@ export async function fetchSearchIndex() {
   if (cachedSearchIndex) return cachedSearchIndex
   const cached = loadLS(CACHE_SEARCH_KEY)
   if (cached) { cachedSearchIndex = cached; return cached }
-  const data = await fetchJson('/search_index.json')
+  const data = await fetchJson(`${BASE}search_index.json`)
   saveLS(CACHE_SEARCH_KEY, data)
   cachedSearchIndex = data
   return data
@@ -50,7 +52,7 @@ export async function fetchAppData(appId) {
   const cached = loadLS(cacheKey)
   if (cached) { cachedData[appId] = cached; return cached }
   const safeId = appId.replace(/\//g, '_')
-  const data = await fetchJson(`/data/${safeId}.json`)
+  const data = await fetchJson(`${BASE}data/${safeId}.json`)
   saveLS(cacheKey, data)
   cachedData[appId] = data
   return data
