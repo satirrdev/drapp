@@ -1,6 +1,7 @@
 import React, { useState, useEffect, useCallback } from 'react'
 import { HashRouter, Routes, Route, Navigate, useParams } from 'react-router-dom'
 import Header from './components/Header'
+import ActionBar from './components/ActionBar'
 import Page from './pages/Page'
 import AppDetail from './pages/AppDetail'
 import './App.css'
@@ -19,6 +20,7 @@ export default function App() {
     <HashRouter>
       <div className="container">
         <Header theme={theme} onToggleTheme={toggleTheme} />
+        <ActionBar />
         <Routes>
           <Route path="/" element={<Navigate to="/page/1" replace />} />
           <Route path="/page/:num" element={<PageWrapper />} />

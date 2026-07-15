@@ -15,7 +15,6 @@ export default function Page({ pageNum }) {
   const [error, setError] = useState(null)
   const [query, setQuery] = useState('')
   const [category, setCategory] = useState('')
-  const [loadIdx, setLoadIdx] = useState(0)
   const [totalPages, setTotalPages] = useState(1)
   const didInit = useRef(false)
 
@@ -39,15 +38,6 @@ export default function Page({ pageNum }) {
     if (query || category) return
     fetchPage(zeroIdx).then(setPageData).catch(() => {})
   }, [pageNum, query, category, zeroIdx])
-
-  useEffect(() => {
-    if (loading || pageData.length === 0) return
-    if (loadIdx >= pageData.length) return
-    const t = setTimeout(() => setLoadIdx((i) => Math.min(i + 1, pageData.length)), 120)
-    return () => clearTimeout(t)
-  }, [loading, loadIdx, pageData])
-
-  useEffect(() => { setLoadIdx(0) }, [pageNum, query, category])
 
   const categories = useMemo(() => searchIdx ? getCategories(searchIdx) : [], [searchIdx])
 
@@ -91,7 +81,6 @@ export default function Page({ pageNum }) {
   const displayTotal = isSearching
     ? Math.ceil((searchResults || []).length / PER_PAGE)
     : totalPages
-  const displayLoadIdx = isSearching ? displayData.length : loadIdx
 
   return (
     <div>
@@ -110,8 +99,8 @@ export default function Page({ pageNum }) {
             Page {pageNum} / {displayTotal}
           </p>
           <div className="grid">
-            {displayData.map((entry, idx) => (
-              <AppCard key={entry.id} app={entry} loadNow={idx < displayLoadIdx} />
+            {displayData.map((entry) => (
+              <AppCard key={entry.id} app={entry} />
             ))}
           </div>
           {displayTotal > 1 && !isSearching && (
