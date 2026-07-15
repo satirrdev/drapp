@@ -74,6 +74,12 @@ export default function AppDetail({ appId }) {
               <span>{data.c.join(', ')}</span>
             </div>
           )}
+          {data.a && (
+            <div className="detail-info-item">
+              <strong>Developer</strong>
+              <span>{data.a}</span>
+            </div>
+          )}
           {data.lic && (
             <div className="detail-info-item">
               <strong>License</strong>
@@ -132,8 +138,9 @@ export default function AppDetail({ appId }) {
               '## App Submission\n\n' +
               '**App Name:** ' + data.n + '\n' +
               '**Package ID:** `' + appId + '`\n' +
-              '**APK Download:** ' + `https://f-droid.org/repo/${appId}_${data.vc}.apk` + '\n' +
-              '**F-Droid Page:** ' + `https://f-droid.org/packages/${appId}/` + '\n' +
+              '**Developer:** ' + (data.a || '') + '\n' +
+              '**Source Code:** ' + (data.src || '') + '\n' +
+              '**Direct Download:** ' + `https://f-droid.org/repo/${appId}_${data.vc}.apk` + '\n' +
               '**Reason for inclusion:** \n**Additional info:** '
             )}`}
             target="_blank"
@@ -147,10 +154,11 @@ export default function AppDetail({ appId }) {
               '## Update Request\n\n' +
               '**App Name:** ' + data.n + '\n' +
               '**Package ID:** `' + appId + '`\n' +
+              '**Developer:** ' + (data.a || '') + '\n' +
               '**Current Version:** ' + (data.v || '-') + '\n' +
               '**Requested Version:** \n' +
-              '**APK Download:** ' + `https://f-droid.org/repo/${appId}_${data.vc}.apk` + '\n' +
-              '**F-Droid Page:** ' + `https://f-droid.org/packages/${appId}/` + '\n' +
+              '**Source Code:** ' + (data.src || '') + '\n' +
+              '**Direct Download:** ' + `https://f-droid.org/repo/${appId}_${data.vc}.apk` + '\n' +
               '**Reason:** '
             )}`}
             target="_blank"

@@ -107,6 +107,7 @@ async function main() {
       web: meta?.webSite || null,
       up: meta?.lastUpdated || null,
       vc: latest.versionCode || '',
+      a: meta?.authorName || '',
     }
 
     const safeId = sanitizeId(pkgName)
