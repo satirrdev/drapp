@@ -1,4 +1,4 @@
-import React, { useState } from 'react'
+import React, { useRef, useState, useEffect } from 'react'
 import { Link } from 'react-router-dom'
 
 const PLACEHOLDER = (
@@ -12,20 +12,37 @@ const PLACEHOLDER = (
 )
 
 export default function AppCard({ app }) {
+  const [visible, setVisible] = useState(false)
   const [loaded, setLoaded] = useState(false)
+  const ref = useRef(null)
+
+  useEffect(() => {
+    const el = ref.current
+    if (!el) return
+    const observer = new IntersectionObserver(
+      ([entry]) => {
+        if (entry.isIntersecting) {
+          setVisible(true)
+          observer.disconnect()
+        }
+      },
+      { rootMargin: '200px' }
+    )
+    observer.observe(el)
+    return () => observer.disconnect()
+  }, [])
 
   return (
     <Link to={`/app/${encodeURIComponent(app.id)}`} style={{ textDecoration: 'none', color: 'inherit' }}>
-      <div className="card">
+      <div className="card" ref={ref}>
         <div className="card-top">
           <div style={{ position: 'relative', width: 48, height: 48, flexShrink: 0 }}>
             {(!app.i || !loaded) && PLACEHOLDER}
-            {app.i && (
+            {app.i && visible && (
               <img
                 className="card-icon"
                 src={app.i}
                 alt=""
-                loading="lazy"
                 onLoad={() => setLoaded(true)}
                 onError={() => setLoaded(false)}
                 style={{

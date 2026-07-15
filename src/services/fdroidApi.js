@@ -1,5 +1,8 @@
 const BASE = import.meta.env.BASE_URL || '/'
 
+const CACHE_VERSION = 2
+const CACHE_VERSION_KEY = 'fdroid_cache_v'
+
 const CACHE_PAGE_PREFIX = 'fdroid_page_'
 const CACHE_SEARCH_KEY = 'fdroid_search'
 const CACHE_DATA_PREFIX = 'fdroid_data_'
@@ -7,6 +10,16 @@ const CACHE_DATA_PREFIX = 'fdroid_data_'
 let cachedSearchIndex = null
 const cachedPages = {}
 const cachedData = {}
+
+function checkCacheVersion() {
+  const v = loadLS(CACHE_VERSION_KEY)
+  if (v !== CACHE_VERSION) {
+    try { localStorage.clear() } catch {}
+    saveLS(CACHE_VERSION_KEY, CACHE_VERSION)
+  }
+}
+
+checkCacheVersion()
 
 async function fetchJson(path) {
   const res = await fetch(path)
