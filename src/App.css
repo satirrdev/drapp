@@ -502,3 +502,9 @@ a:hover {
   box-shadow: var(--shadow);
   text-decoration: none;
 }
+
+.detail-actions {
+  display: flex;
+  gap: 8px;
+  flex-wrap: wrap;
+}

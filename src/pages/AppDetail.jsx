@@ -3,6 +3,8 @@ import { Link } from 'react-router-dom'
 import { marked } from 'marked'
 import { fetchAppData } from '../services/fdroidApi'
 
+const REPO = 'https://github.com/satirrdev/drapp/issues/new'
+
 marked.setOptions({ breaks: true, gfm: true })
 
 export default function AppDetail({ appId }) {
@@ -120,6 +122,44 @@ export default function AppDetail({ appId }) {
         >
           View on F-Droid
         </a>
+      </div>
+
+      <div className="detail-section">
+        <h3>Actions</h3>
+        <div className="detail-actions">
+          <a
+            href={`${REPO}?title=${encodeURIComponent('Submit App: ' + data.n)}&body=${encodeURIComponent(
+              '## App Submission\n\n' +
+              '**App Name:** ' + data.n + '\n' +
+              '**Package ID:** `' + appId + '`\n' +
+              '**APK Download:** ' + `https://f-droid.org/repo/${appId}_${data.vc}.apk` + '\n' +
+              '**F-Droid Page:** ' + `https://f-droid.org/packages/${appId}/` + '\n' +
+              '**Reason for inclusion:** \n**Additional info:** '
+            )}`}
+            target="_blank"
+            rel="noopener noreferrer"
+            className="action-btn"
+          >
+            Submit App
+          </a>
+          <a
+            href={`${REPO}?title=${encodeURIComponent('Update Request: ' + data.n)}&body=${encodeURIComponent(
+              '## Update Request\n\n' +
+              '**App Name:** ' + data.n + '\n' +
+              '**Package ID:** `' + appId + '`\n' +
+              '**Current Version:** ' + (data.v || '-') + '\n' +
+              '**Requested Version:** \n' +
+              '**APK Download:** ' + `https://f-droid.org/repo/${appId}_${data.vc}.apk` + '\n' +
+              '**F-Droid Page:** ' + `https://f-droid.org/packages/${appId}/` + '\n' +
+              '**Reason:** '
+            )}`}
+            target="_blank"
+            rel="noopener noreferrer"
+            className="action-btn"
+          >
+            Request Update
+          </a>
+        </div>
       </div>
     </div>
   )
