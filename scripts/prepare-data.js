@@ -93,7 +93,7 @@ async function main() {
       c: meta?.categories || [],
     })
 
-    searchIndex.push({ id: pkgName, n: name, c: meta?.categories || [] })
+    searchIndex.push({ id: pkgName, n: name, s: summary, i: iconUrl, v: latest.versionName || '', c: meta?.categories || [] })
 
     const appData = {
       n: name,
