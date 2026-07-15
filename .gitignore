@@ -1,5 +1,7 @@
 node_modules/
 dist/
+.agents/
+knowledge.md
 public/search_index.json
 public/page_*.json
 public/data/
