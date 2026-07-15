@@ -137,11 +137,15 @@ export default function AppDetail({ appId }) {
             href={`${REPO}?title=${encodeURIComponent('Submit App: ' + data.n)}&body=${encodeURIComponent(
               '## App Submission\n\n' +
               '**App Name:** ' + data.n + '\n' +
-              '**Package ID:** `' + appId + '`\n' +
+              '**Package ID:** ' + appId + '\n' +
+              '**Version:** ' + (data.v || '-') + '\n' +
               '**Developer:** ' + (data.a || '') + '\n' +
-              '**Source Code:** ' + (data.src || '') + '\n' +
-              '**Direct Download:** ' + `https://f-droid.org/repo/${appId}_${data.vc}.apk` + '\n' +
-              '**Reason for inclusion:** \n**Additional info:** '
+              '**Repository URL:** ' + (data.src || '') + '\n' +
+              '**Description:** ' + (data.d ? data.d.replace(/\n/g, ' ').substring(0, 500) : '') + '\n' +
+              '**App Icon:** ' + (data.i || '') + '\n' +
+              '**APK Direct Link:** ' + `https://f-droid.org/repo/${appId}_${data.vc}.apk` + '\n' +
+              '**Reason for inclusion:** \n' +
+              '**Additional Info:** '
             )}`}
             target="_blank"
             rel="noopener noreferrer"
@@ -153,12 +157,13 @@ export default function AppDetail({ appId }) {
             href={`${REPO}?title=${encodeURIComponent('Update Request: ' + data.n)}&body=${encodeURIComponent(
               '## Update Request\n\n' +
               '**App Name:** ' + data.n + '\n' +
-              '**Package ID:** `' + appId + '`\n' +
-              '**Developer:** ' + (data.a || '') + '\n' +
+              '**Package ID:** ' + appId + '\n' +
               '**Current Version:** ' + (data.v || '-') + '\n' +
               '**Requested Version:** \n' +
-              '**Source Code:** ' + (data.src || '') + '\n' +
-              '**Direct Download:** ' + `https://f-droid.org/repo/${appId}_${data.vc}.apk` + '\n' +
+              '**Developer:** ' + (data.a || '') + '\n' +
+              '**Description:** ' + (data.d ? data.d.replace(/\n/g, ' ').substring(0, 500) : '') + '\n' +
+              '**App Icon:** ' + (data.i || '') + '\n' +
+              '**APK Direct Link:** ' + `https://f-droid.org/repo/${appId}_${data.vc}.apk` + '\n' +
               '**Reason:** '
             )}`}
             target="_blank"

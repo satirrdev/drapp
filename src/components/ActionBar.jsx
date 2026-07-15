@@ -6,12 +6,31 @@ const actions = [
   {
     label: 'Submit App',
     title: 'App Submission',
-    body: `## App Submission\n\n**App Name:** \n**Package ID:** \n**Repository URL:** \n**Reason for inclusion:** \n**Additional info:** `,
+    body: '## App Submission\n\n' +
+      '**App Name:** \n' +
+      '**Package ID:** \n' +
+      '**Version:** \n' +
+      '**Developer:** \n' +
+      '**Repository URL:** \n' +
+      '**Description:** \n' +
+      '**App Icon (URL):** \n' +
+      '**APK Direct Link:** \n' +
+      '**Reason for inclusion:** \n' +
+      '**Additional Info:** ',
   },
   {
     label: 'Request Update',
     title: 'Update Request',
-    body: `## Update Request\n\n**App Name:** \n**Package ID:** \n**Current Version:** \n**Requested Version:** \n**Reason:** `,
+    body: '## Update Request\n\n' +
+      '**App Name:** \n' +
+      '**Package ID:** \n' +
+      '**Current Version:** \n' +
+      '**Requested Version:** \n' +
+      '**Developer:** \n' +
+      '**Description:** \n' +
+      '**App Icon (URL):** \n' +
+      '**APK Direct Link:** \n' +
+      '**Reason:** ',
   },
   {
     label: 'Feature Request',
