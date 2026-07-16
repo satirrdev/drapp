@@ -76,7 +76,7 @@ export default function Page({ pageNum }) {
 
   const isSearching = !!(query || category)
   const displayData = isSearching
-    ? (searchResults || []).slice(0, PER_PAGE)
+    ? (searchResults || []).slice(zeroIdx * PER_PAGE, zeroIdx * PER_PAGE + PER_PAGE)
     : pageData
   const displayTotal = isSearching
     ? Math.ceil((searchResults || []).length / PER_PAGE)
@@ -103,7 +103,7 @@ export default function Page({ pageNum }) {
               <AppCard key={entry.id} app={entry} />
             ))}
           </div>
-          {displayTotal > 1 && !isSearching && (
+          {displayTotal > 1 && (
             <Pagination page={pageNum} totalPages={displayTotal} onPageChange={(p) => navigate(`/page/${p}`)} />
           )}
         </>
