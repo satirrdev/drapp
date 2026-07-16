@@ -68,15 +68,40 @@ async function main() {
     if (entry.packageName) appsMap[entry.packageName] = entry
   }
 
+  const manualApps = [
+    {
+      id: 'com.offsec.nethunter',
+      n: 'Nethunter',
+      s: 'Next-gen Kali NetHunter installer, updater, and interface',
+      i: 'https://store.nethunter.com/repo/icons/com.offsec.nethunter.2026061000.png',
+      v: '2026.06',
+      c: ['Security'],
+      d: 'This is the next-gen Kali NetHunter application, which acts as an installer, updater, and interface for the Kali Linux NetHunter platform. It provides security professionals with mobile penetration testing capabilities directly from their Android device.',
+      src: 'https://gitlab.com/kalilinux/nethunter/apps/kali-nethunter-app',
+      lic: 'GPL-3.0-only',
+      web: 'https://www.kali.org/get-kali/#kali-mobile',
+      up: '2026-06-10T00:00:00Z',
+      vc: '2026061000',
+      a: 'Kali Linux',
+      apk: 'https://store.nethunter.com/repo/com.offsec.nethunter_2026061000.apk',
+    },
+  ]
+
   const allCardData = []
   const searchIndex = []
 
   for (const [pkgName, versions] of Object.entries(raw.packages || {})) {
     if (!versions || versions.length === 0) continue
-    const latest = versions[versions.length - 1]
-    if (!latest) continue
-
     const meta = appsMap[pkgName]
+    let latest
+    if (meta && meta.suggestedVersionCode) {
+      latest = versions.find(v => v.versionCode === meta.suggestedVersionCode)
+    }
+    if (!latest) {
+      versions.sort((a, b) => (b.versionCode || 0) - (a.versionCode || 0))
+      latest = versions[0]
+    }
+    if (!latest) continue
     const name = getLocalizedValue(meta, 'name') || latest.name || pkgName
     const summary = getLocalizedValue(meta, 'summary') || latest.summary || ''
     const localizedIcon = getLocalizedIconUrl(meta)
@@ -112,6 +137,13 @@ async function main() {
 
     const safeId = sanitizeId(pkgName)
     writeFileSync(join(DATA_DIR, `${safeId}.json`), JSON.stringify(appData), 'utf-8')
+  }
+
+  for (const app of manualApps) {
+    allCardData.push({ id: app.id, n: app.n, s: app.s, i: app.i, v: app.v, c: app.c })
+    searchIndex.push({ id: app.id, n: app.n, s: app.s, i: app.i, v: app.v, c: app.c })
+    const appData = { n: app.n, s: app.s, i: app.i, v: app.v, c: app.c, d: app.d, src: app.src, lic: app.lic, web: app.web, up: app.up, vc: app.vc, a: app.a }
+    writeFileSync(join(DATA_DIR, `${sanitizeId(app.id)}.json`), JSON.stringify(appData), 'utf-8')
   }
 
   // Write page files (20 apps each)
