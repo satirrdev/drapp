@@ -1,4 +1,4 @@
-import React, { useState, useEffect, useMemo } from 'react'
+import React, { useState, useEffect, useMemo, useRef } from 'react'
 import { Link } from 'react-router-dom'
 import { marked } from 'marked'
 import { fetchAppData } from '../services/fdroidApi'
@@ -10,6 +10,8 @@ marked.setOptions({ breaks: true, gfm: true })
 export default function AppDetail({ appId }) {
   const [data, setData] = useState(null)
   const [loading, setLoading] = useState(true)
+  const qrRef = useRef(null)
+  const pageUrl = useMemo(() => `${window.location.origin}${window.location.pathname}#/app/${appId}`, [appId])
 
   useEffect(() => {
     let cancelled = false
@@ -19,6 +21,24 @@ export default function AppDetail({ appId }) {
       .catch(() => { if (!cancelled) setLoading(false) })
     return () => { cancelled = true }
   }, [appId])
+
+  useEffect(() => {
+    if (!data) return
+    const el = qrRef.current
+    if (!el) return
+    const render = () => {
+      if (typeof OpenQTR !== 'undefined' && el.childNodes.length === 0) {
+        OpenQTR.generate({
+          text: pageUrl,
+          element: el,
+          size: 200,
+        })
+      }
+    }
+    if (typeof OpenQTR !== 'undefined') { render(); return }
+    const iv = setInterval(() => { if (typeof OpenQTR !== 'undefined') { clearInterval(iv); render() } }, 200)
+    return () => clearInterval(iv)
+  }, [data, pageUrl])
 
   if (loading) return <div className="loading">Loading...</div>
   if (!data) return <div className="error">App not found</div>
@@ -128,6 +148,17 @@ export default function AppDetail({ appId }) {
         >
           View on F-Droid
         </a>
+      </div>
+
+      <div className="detail-section" style={{ textAlign: 'center' }}>
+        <h3>Scan to Open</h3>
+        <p style={{ fontSize: 12, marginBottom: 12 }}>
+          Scan with your phone to open this app page
+        </p>
+        <div
+          ref={qrRef}
+          style={{ display: 'inline-block' }}
+        />
       </div>
 
       <div className="detail-section">
