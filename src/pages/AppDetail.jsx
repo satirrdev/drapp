@@ -26,18 +26,16 @@ export default function AppDetail({ appId }) {
     if (!data) return
     const el = qrRef.current
     if (!el) return
-    const render = () => {
-      if (typeof OpenQTR !== 'undefined' && el.childNodes.length === 0) {
-        OpenQTR.generate({
-          text: pageUrl,
-          element: el,
-          size: 200,
-        })
-      }
+    try {
+      OpenQTR.generate({
+        text: pageUrl,
+        element: el,
+        size: 200,
+        format: 'svg',
+      })
+    } catch (e) {
+      console.warn('QR generation failed:', e)
     }
-    if (typeof OpenQTR !== 'undefined') { render(); return }
-    const iv = setInterval(() => { if (typeof OpenQTR !== 'undefined') { clearInterval(iv); render() } }, 200)
-    return () => clearInterval(iv)
   }, [data, pageUrl])
 
   if (loading) return <div className="loading">Loading...</div>
