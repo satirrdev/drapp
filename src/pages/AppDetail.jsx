@@ -1,7 +1,6 @@
-import React, { useState, useEffect, useMemo } from 'react'
+import React, { useState, useEffect, useMemo, useRef } from 'react'
 import { Link } from 'react-router-dom'
 import { marked } from 'marked'
-import QRCode from 'qrcode'
 import { fetchAppData } from '../services/fdroidApi'
 
 const REPO = 'https://github.com/satirrdev/drapp/issues/new'
@@ -11,7 +10,7 @@ marked.setOptions({ breaks: true, gfm: true })
 export default function AppDetail({ appId }) {
   const [data, setData] = useState(null)
   const [loading, setLoading] = useState(true)
-  const [qrSvg, setQrSvg] = useState(null)
+  const qrRef = useRef(null)
   const pageUrl = useMemo(() => `${window.location.origin}${window.location.pathname}#/app/${appId}`, [appId])
 
   useEffect(() => {
@@ -25,9 +24,18 @@ export default function AppDetail({ appId }) {
 
   useEffect(() => {
     if (!data) return
-    QRCode.toString(pageUrl, { type: 'svg', width: 200, margin: 1 }, (err, svg) => {
-      if (!err) setQrSvg(svg)
-    })
+    const el = qrRef.current
+    if (!el) return
+    try {
+      OpenQTR.generate({
+        text: pageUrl,
+        element: el,
+        size: 200,
+        format: 'svg',
+      })
+    } catch (e) {
+      console.warn('QR generation failed:', e)
+    }
   }, [data, pageUrl])
 
   if (loading) return <div className="loading">Loading...</div>
@@ -145,11 +153,7 @@ export default function AppDetail({ appId }) {
         <p style={{ fontSize: 12, marginBottom: 12 }}>
           Scan with your phone to open this app page
         </p>
-        {qrSvg ? (
-          <div style={{ display: 'inline-block' }} dangerouslySetInnerHTML={{ __html: qrSvg }} />
-        ) : (
-          <p style={{ fontSize: 11, color: 'var(--color-muted)' }}>Generating QR...</p>
-        )}
+        <div ref={qrRef} style={{ display: 'inline-block' }} />
       </div>
 
       <div className="detail-section">
